@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link href="https://cdn.bootcss.com/element-ui/2.8.2/theme-chalk/index.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div id="app">
+            <div>
+                <el-table :data="tableData" style="width: 100%" border :span-method="objectSpanMethod">
+                    <el-table-column type="index" width="50" label="序号">
+                    </el-table-column>
+                    <el-table-column prop="baojian" label="报建程序">
+                    </el-table-column>
+                    <el-table-column prop="qianzhi" label="前置条件">
+                    </el-table-column>
+                    <el-table-column prop="describe" label="任务描述">
+                    </el-table-column>
+                    <el-table-column prop="danwei" label="责任单位"> </el-table-column>
+                    <el-table-column prop="people" label="责任人"> </el-table-column>
+                    <el-table-column prop="timeStart" label="计划完成时间"></el-table-column>
+                    <el-table-column prop="timeEnd" label="实际完成时间"></el-table-column>
+                    <el-table-column label="提前/延期">
+                        <template slot-scope="scope">
+                            延期{{ scope.row.day }}天
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="situation" label="完成情况">
+                    </el-table-column>
+                    <el-table-column prop="info" label="备注"> </el-table-column>
+                </el-table>
+            </div>
+        </div>
+        <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+        <script src="https://cdn.bootcss.com/element-ui/2.8.2/index.js"></script>
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    tableData: [
+                        {
+                            baojian: "主人办公会",
+                            qianzhi: "重点项目清单",
+                            describe: "提请主任办公会审议重点项目",
+                            danwei: "重大项目办",
+                            timeStart: "2019-05-15",
+                            timeEnd: "2019-06-12",
+                            people: "王总",
+                            situation: "1",
+                            info: "备注信息",
+                            day: 10
+                        },
+                        {
+                            baojian: "前期工作函",
+                            qianzhi: "会议纪要",
+                            describe: "提请主任办公会审议重点项目",
+                            danwei: "重大项目办",
+                            timeStart: "2019-05-15",
+                            timeEnd: "2019-06-12",
+                            people: "王总",
+                            situation: "1",
+                            info: "备注信息",
+                            day: 10
+                        },
+                        {
+                            baojian: "前期工作函",
+                            qianzhi: "规划选址",
+                            describe: "提请主任办公会审议重点项目",
+                            danwei: "重大项目办",
+                            timeStart: "2019-05-15",
+                            timeEnd: "2019-06-12",
+                            people: "王总",
+                            situation: "1",
+                            info: "备注信息",
+                            day: 10
+                        },
+                        {
+                            baojian: "前期工作函",
+                            qianzhi: "规划选址",
+                            describe: "提请主任办公会审议重点项目",
+                            danwei: "重大项目办",
+                            timeStart: "2019-05-15",
+                            timeEnd: "2019-06-12",
+                            people: "王总",
+                            situation: "1",
+                            info: "备注信息",
+                            day: 10
+                        },
+                        {
+                            baojian: "前期工作函",
+                            qianzhi: "规划选址",
+                            describe: "提请主任办公会审议重点项目",
+                            danwei: "重大项目办",
+                            timeStart: "2019-05-15",
+                            timeEnd: "2019-06-12",
+                            people: "王总",
+                            situation: "1",
+                            info: "备注信息",
+                            day: 10
+                        }
+                    ],
+                    spanOneArr: [],
+                    spanTwoArr: [],
+                    concatOne: 0,
+                    concatTwo: 0
+                },
+                mounted() {
+                    this.rowsPan();
+                },
+                methods: {
+                    rowsPan() {
+                        this.spanOneArr = [];
+                        this.spanTwoArr = [];
+                        this.concatOne = 0;
+                        this.concatTwo = 0;
+                        this.tableData.forEach((item, index) => {
+                            if (index === 0) {
+                                this.spanOneArr.push(1);
+                                this.spanTwoArr.push(1);
+                            } else {
+                                if (item.baojian === this.tableData[index - 1].baojian) { //第二列需合并相同内容的判断条件
+                                    this.spanOneArr[this.concatOne] += 1;
+                                    this.spanOneArr.push(0);
+                                } else {
+                                    this.spanOneArr.push(1);
+                                    this.concatOne = index;
+                                };
+                                if (item.qianzhi === this.tableData[index - 1].qianzhi) {//第三列
+                                    this.spanTwoArr[this.concatTwo] += 1;
+                                    this.spanTwoArr.push(0);
+                                } else {
+                                    this.spanTwoArr.push(1);
+                                    this.concatTwo = index;
+                                };
+                            }
+                        })
+                    },
+                    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+                        if (columnIndex === 1) {
+                            const _row = this.spanOneArr[rowIndex];
+                            const _col = _row > 0 ? 1 : 0;
+                            return {
+                                rowspan: _row,
+                                colspan: _col
+                            };
+                        }
+                        if (columnIndex === 2) {
+                            const _row = this.spanTwoArr[rowIndex];
+                            const _col = _row > 0 ? 1 : 0;
+                            return {
+                                rowspan: _row,
+                                colspan: _col
+                            };
+                        }
+                    }
+                }
+            })
+        </script>
+    </body>
+
+</html>
