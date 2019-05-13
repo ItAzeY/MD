@@ -146,3 +146,10 @@ Object.keys(filters).forEach(key => {
 	Vue.filter(key, filters[key])
 })
 ```
+
+### 最终展示
+
+> 说了这么多我们还没有看看今天的主角是什么样子呢\
+> 快来让我们看一看它吧~
+
+![Image text](./img/showTable.jpg)
