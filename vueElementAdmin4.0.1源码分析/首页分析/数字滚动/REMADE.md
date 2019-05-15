@@ -82,6 +82,7 @@ Methods
 ### 子组件
 
 - 点击触发方法向父组件传递数据
+- 点击触发子组件的`handleSetLineChartData`方法,通过`this.$emit()`触发父组件`handleSetLineChartData`并传递参数
 
 ```html
 <div class="card-panel" @click="handleSetLineChartData('purchases')"></div>
@@ -106,3 +107,9 @@ handleSetLineChartData(type) {
   this.lineChartData = lineChartData[type]
 }
 ```
+
+## 效果图
+
+最后贴上效果图
+
+![Image text](./img/数组滚动插件效果.gif)

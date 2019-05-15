@@ -2,28 +2,7 @@
 
 ## 目录结构
 
-> 重点再 90 行 [点击传送](#重点)
-
-```·
-📦dashboard               // src下的 views下的首页
- ┣ 📂admin                // admin组件
- ┃ ┣ 📂components
- ┃ ┃ ┣ 📂TodoList
- ┃ ┃ ┃ ┣ 📜index.scss
- ┃ ┃ ┃ ┣ 📜index.vue
- ┃ ┃ ┃ ┗ 📜Todo.vue
- ┃ ┃ ┣ 📜BarChart.vue
- ┃ ┃ ┣ 📜BoxCard.vue
- ┃ ┃ ┣ 📜LineChart.vue
- ┃ ┃ ┣ 📜PanelGroup.vue
- ┃ ┃ ┣ 📜PieChart.vue
- ┃ ┃ ┣ 📜RaddarChart.vue
- ┃ ┃ ┗ 📜TransactionTable.vue   // 这个就是我们今天分析的主角
- ┃ ┗ 📜index.vue          // admin 默认展示的index页面, 主角就再这里面
- ┣ 📂editor               // 编辑组件
- ┃ ┗ 📜index.vue
- ┗ 📜index.vue            // 权限 控制展示哪一个组件
-```
+> 重点再 69 行 [点击传送](#重点)
 
 ### TransactionTable.vue
 
