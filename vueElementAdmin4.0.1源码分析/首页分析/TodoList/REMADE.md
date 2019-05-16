@@ -141,3 +141,124 @@ deleteTodo(todo) { // 删除方法
   this.setLocalStorage()
 }
 ```
+
+## todo 组件分析
+
+- 点击 input 按钮触发`toggleTodo`方法,向父组件传递方法(toggleTodo)数据(todo)**编辑和删除同理**
+
+```html
+<input :checked="todo.done" class="toggle" type="checkbox" @change="toggleTodo( todo )" />
+toggleTodo(todo) {this.$emit('toggleTodo', todo)}
+```
+
+- `props` : 解构父组件传递过来的数据. 例如:`todo`
+- `type` : 当前数据的`type`类型
+- `default` : 如果是`值`可以不用写函数形式,如果是`址`就必须要改成函数的形式
+- 如果里面还有对象那就需要再包一层
+
+```js
+// 正常一层
+props: {
+  todo: {
+    type: Object,
+    default: function() {
+      return {}
+    }
+  }
+}
+// 二层及以上
+props: {
+  todo: {
+    type: Object,
+    default: function() {
+      return {
+        list['a','b','c'],
+        time:{
+          start: '',
+          end: ''
+        },
+        ...
+      }
+    }
+  }
+}
+```
+
+- `:class` : 动态绑定 class,`todo.done`存在,`completed`class 存在,反之.editing 同理
+
+```HTML
+<li :class="{ completed: todo.done, editing: editing }" class="todo"></li>
+```
+
+- `@dblclick="editing = true"` : 绑定双击事件,把`editing`值设置为`true`
+
+```html
+<label @dblclick="editing = true" v-text="todo.text" />
+```
+
+> 自定义指令
+
+- `directives` 自定义指令
+- el : 自定义指令挂载的元素
+- value : 是从`binding`解构出来`value`属性,里面还有(name,value,oldValue,expression,arg,modifiers,vnode,oldVnode)
+- context : 是从`vnode`解构出来`context`属性,具体里面的东西`emmmm`不清楚
+- `@keyup.enter="doneEdit"` : 之前已经说出了,触发`doneEdit`方法.`.esc`是监听用户按下`esc`键时触发的方法`cancelEdit`
+- `@blur="doneEdit"` : 失去焦点时的事件触发`doneEdit`方法
+- `v-focus="editing"` : value 就是 editing 的值
+- `v-show="editing"` : 如果值为`true`当前标签就隐藏(display:none),为`false`就显示,初始化的时候会多消耗一点性能,通过 display 来控制显示隐藏
+- 与`v-show`相同的功能还有`v-if` : 值为`true`显示,为`false`隐藏(删除 DOM),初始化的时候不会显示,删除 dom,新建 dom 来做显示隐藏
+- 如果少量操作推荐用`v-if` 如果频繁操作推荐用`v-show`
+
+```html
+<input
+	v-show="editing"
+	v-focus="editing"
+	:value="todo.text"
+	class="edit"
+	@keyup.enter="doneEdit"
+	@keyup.esc="cancelEdit"
+	@blur="doneEdit"
+/>
+```
+
+```js
+directives: { // 自定义指令
+  focus(el, { value }, { context }) {
+    if (value) {
+      context.$nextTick(() => {
+        el.focus()
+      })
+    }
+  }
+}
+this.editing = false  // data数据
+deleteTodo(todo) { // methods 方法
+  this.$emit('deleteTodo', todo)
+}
+editTodo({ todo, value }) { // methods 方法
+  this.$emit('editTodo', { todo, value })
+}
+/**
+ * e : 参数, 默认有一个`$event`取到当前事件的`value`属性,并去除头尾空格
+ * const { todo } = this : 从当前vue实例中把`todo`解构出来
+*/
+doneEdit(e) {// methods 方法
+  const value = e.target.value.trim()
+  const { todo } = this
+  if (!value) {
+    this.deleteTodo({
+      todo
+    })
+  } else if (this.editing) {
+    this.editTodo({
+      todo,
+      value
+    })
+    this.editing = false
+  }
+},
+cancelEdit(e) {
+  e.target.value = this.todo.text // 按下esc键 重新把原来的值赋给当前值
+  this.editing = false
+}
+```
