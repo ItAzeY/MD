@@ -262,3 +262,87 @@ cancelEdit(e) {
   this.editing = false
 }
 ```
+
+## 根据 length 显示隐藏
+
+> 之前都是通过`arr.length > 0`的时候显示,却忘记了`boolean(0)`也是`false`,
+> 所以以后就不需要通过上面那样判断了,太 low 了,直接`arr.length`就可以了
+
+```html
+<!-- 根据这个受到的启发 -->
+<footer v-show="todos.length" class="footer"></footer>
+```
+
+## 过滤器传参
+
+- `remaining` : 计算属性取得值.如果`todos`里面得每一项得`done`属性都为`true`得`length`值
+- `{{ remaining | pluralize('item') }} left` : **pluralize**过滤器,`remaining`为第一个参数,`item`为第二个参数
+
+```html
+<span class="todo-count">
+	<strong>{{ remaining }}</strong>
+	{{ remaining | pluralize('item') }} left
+</span>
+```
+
+```js
+filters: { // 过滤器
+  pluralize: (n, w) => (n === 1 ? w : w + 's'),
+  capitalize: s => s.charAt(0).toUpperCase() + s.slice(1)
+}
+computed: { // 计算属性
+  remaining() {
+    return this.todos.filter(todo => !todo.done).length
+  }
+}
+```
+
+## for in
+
+> 可以通过外部定义变量,挂载到 data 中,也能被 vue 监听到
+
+- 此处得`filters`是一个对象,对象里面有三个函数,分别是`all, active, completed`
+- `filters`通过 `v-for` 循环,`val`是内容,`key`是属性
+- `@click.prevent="visibility = key"` : 当点击这个`a`标签的时候,把`visibility`变成这个`key`
+- `{{ key | capitalize }}` : 把这个`key`的第一个字符变成大写 + 截取掉这个`key`的第一个字符
+- 至于点击切换状态时因为`visibility`值变了. 循环`todo`组件的时候时根据`filteredTodos`计算属性来循环的,所以才会有一种切换的效果
+
+```html
+<ul class="todo-list">
+	<todo
+		v-for="(todo, index) in filteredTodos"
+		:key="index"
+		:todo="todo"
+		@toggleTodo="toggleTodo"
+		@editTodo="editTodo"
+		@deleteTodo="deleteTodo"
+	/>
+</ul>
+<ul class="filters">
+	<li v-for="(val, key) in filters" :key="key">
+		<a :class="{ selected: visibility === key }" @click.prevent="visibility = key">
+			{{ key | capitalize }}
+		</a>
+	</li>
+</ul>
+```
+
+```js
+const filters = {
+  all: todos => todos,
+  active: todos => todos.filter(todo => !todo.done),
+  completed: todos => todos.filter(todo => todo.done)
+}
+filters: {
+  capitalize: s => s.charAt(0).toUpperCase() + s.slice(1)
+},
+data() {
+  return {
+    visibility: 'all',
+    filters
+  }
+}
+filteredTodos() { // 计算属性
+  return filters[this.visibility](this.todos)
+}
+```
