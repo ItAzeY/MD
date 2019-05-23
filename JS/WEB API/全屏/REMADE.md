@@ -1,14 +1,5 @@
 # 全屏
 
-## 判断浏览器时候可以全屏
+> 目前`判断浏览器时候可以全屏` `进入全屏状态(DOM|document)` `退出全屏状态`
 
-```js
-export const fullscreenEnable = () => {
-	var isFullscreen =
-		document.fullscreenEnabled ||
-		window.fullScreen ||
-		document.mozFullscreenEnabled ||
-		document.webkitIsFullScreen
-	return isFullscreen
-}
-```
+> 缺少的有 `按 esc 退出全屏状态` `按enter进入或者退出全屏状态` `是否处于全屏状态`
