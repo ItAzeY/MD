@@ -34,6 +34,18 @@ computed: {
   },
 ```
 
+```js
+// vuex
+state: {
+  show: true
+},
+mutations: {
+  SET_SHOW: (state, active) => {
+    state.show = !active
+  }
+}
+```
+
 ## 通过路由全局守卫来判断进入的是不是需要隐藏的页面
 
 > 如果是需要隐藏的页面,那我们就触发 vuex 中的方法,达到修改样式和隐藏组件
