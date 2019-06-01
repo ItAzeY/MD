@@ -1,25 +1,5 @@
 # 时间
 
-## 获取当前时间年月日
-
-```
-function getNowFormatDate() {
-    var date = new Date();
-    var seperator1 = "-";
-    var year = date.getFullYear();
-    var month = date.getMonth() + 1;
-    var strDate = date.getDate();
-    if (month >= 1 && month <= 9) {
-        month = "0" + month;
-    }
-    if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
-    }
-    var currentdate = year + seperator1 + month + seperator1 + strDate;
-    return currentdate;
-}
-```
-
 ## 格式化金钱
 
 ```js
@@ -57,14 +37,6 @@ const color = RandomColor()
 const StartScore = rate => "★★★★★☆☆☆☆☆".slice(5 - rate, 10 - rate)
 const start = StartScore(3)
 // start => "★★★"
-```
-
-## 操作 URL 查询参数
-
-```js
-const params = new URLSearchParams(location.search.replace(/\?/gi, "")) // location.search = "?name=yajun&sex=female"
-params.has("yajun") // true
-params.get("sex") // "female"
 ```
 
 ## 字符串不足补零
