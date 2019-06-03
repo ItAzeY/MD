@@ -1,0 +1,290 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+		<script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.js"></script>
+		<title>project</title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="main" style="width:100vw;height:100vh"></div>
+		<script>
+			window.onresize = () => {
+				drawcharts("main")
+			}
+			console.log(echarts)
+			// var myChart = document.getElementById("main")
+			var myChart
+			;(drawcharts = function(id) {
+				if (myChart != null && myChart != "" && myChart != undefined) {
+					myChart.dispose()
+				}
+				//绘制图表
+				let data = [
+					{
+						startTime: "2018-06-05 8:00:00",
+						endTime: "",
+						item: "1"
+					},
+					{
+						startTime: "2018-08-03 12:00:00",
+						endTime: "2018-08-04 12:00:00",
+						item: "2"
+					},
+					{
+						startTime: "2018-08-04 12:00:00",
+						endTime: "2018-08-06 00:00:00",
+						item: "3"
+					},
+					{
+						startTime: "2018-08-02 20:00:00",
+						endTime: "2018-09-30 12:00:00",
+						item: "4"
+					},
+					{
+						startTime: "2018-08-02 20:00:00",
+						endTime: "2018-09-30 12:00:00",
+						item: "5"
+					},
+					{
+						startTime: "2018-08-02 20:00:00",
+						endTime: "2018-09-30 12:00:00",
+						item: "6"
+					},
+					{
+						startTime: "2018-08-02 20:00:00",
+						endTime: "2018-09-30 12:00:00",
+						item: "7"
+					},
+					{
+						startTime: "2018-08-02 20:00:00",
+						endTime: "2018-09-30 12:00:00",
+						item: "8"
+					},
+					{
+						startTime: "2018-08-02 20:00:00",
+						endTime: "2018-09-30 12:00:00",
+						item: "9"
+					}
+				]
+				let start_ = "2018-08-02 00:00:00",
+					end_ = "2018-11-05 24:00:00"
+				let seriesData = []
+				let yAxisData_plant = []
+				data.forEach((t, index) => {
+					yAxisData_plant.push(t.item)
+					let bgColor
+					bgColor = "rgba(0,187,255,0.4)"
+					let startTime = new Date(t.startTime).getTime()
+					let endTime = new Date(t.endTime).getTime()
+					seriesData.push({
+						name: t.item,
+						// value: [index, startTime, endTime, listItem.quantity],
+						value: [index, startTime, endTime],
+						itemStyle: {
+							normal: {
+								color: bgColor
+							}
+						}
+					})
+				})
+				var option = {
+					backgroundColor: "#26263C",
+					tooltip: {
+						trigger: "axis",
+						formatter: function(params) {
+							var icon, name, dataStart, dataEnd, link
+							icon = params[0].marker
+							name = params[0].name + ":"
+							if (params[0].value[1] && new Date(params[0].value[2])) {
+								link = "----"
+								dataStart = new Date(params[0].value[1]).toLocaleDateString()
+								dataEnd = new Date(params[0].value[2]).toLocaleDateString()
+								return icon + name + dataStart + link + dataEnd
+							}
+							return icon + name
+						}
+					},
+					grid: {
+						// top: 48,
+						left: 100,
+						right: 50
+						// bottom: 50,
+						// height: 500
+					},
+					dataZoom: [
+						{
+							show: true,
+							type: "slider",
+							filterMode: "none",
+							xAxisIndex: [0],
+							realtime: true,
+							height: 10,
+							// top: 370,
+							start: 0,
+							end: 10,
+							minValueSpan: 3600 * 24 * 1000 * 7,
+							handleIcon: "path://path://M100, 100m -75, 0a75,75 0 1,0 150,0a75,75 0 1,0 -150,0",
+							handleSize: "120%",
+							handleStyle: {
+								color: "#fff",
+								shadowColor: "rgba(0, 0, 0, 0.5)",
+								shadowBlur: 4
+							},
+							textStyle: {
+								color: "transparent"
+							},
+							borderColor: "transparent",
+							backgroundColor: "#D7F4FF",
+							dataBackground: {
+								lineStyle: {
+									width: 0
+								},
+								areaStyle: {
+									color: "transparent"
+								}
+							},
+							fillerColor: "#00EBFF"
+						},
+						{
+							type: "inside",
+							show: true,
+							zoomOnMouseWheel: false,
+							moveOnMouseWheel: true,
+							moveOnMouseMove: true,
+							preventDefaultMouseMove: true,
+							xAxisIndex: [0]
+						},
+						{
+							show: true,
+							type: "slider",
+							yAxisIndex: [0],
+							filterMode: "none",
+							realtime: true,
+							handleIcon: "path://path://M100, 100m -75, 0a75,75 0 1,0 150,0a75,75 0 1,0 -150,0",
+							handleSize: "120s%",
+							start: 0,
+							end: 10,
+							width: 10,
+							handleStyle: {
+								color: "#fff",
+								shadowColor: "rgba(0, 0, 0, 0.5)",
+								shadowBlur: 1
+							},
+							textStyle: {
+								color: "transparent"
+							},
+							borderColor: "transparent",
+							backgroundColor: "#D7F4FF",
+							fillerColor: "#00EBFF"
+						}
+					],
+					xAxis: {
+						type: "time",
+						// min: new Date(start_).getTime(),
+						// min: "dataMin",
+						// max: new Date(end_).getTime(),
+						// max: 86400000,
+						// scale: true,
+						tickPixelInterval: 10,
+						interval: 3600 * 24 * 1000,
+						maxInterval: 3600 * 24 * 1000,
+						minInterval: 1,
+						position: "top",
+						// splitNumber: 20,
+						axisLabel: {
+							show: true,
+							textStyle: { color: "#ffffff" },
+							interval: 0,
+							margin: 15,
+							fontSize: 14,
+							formatter: function(value, index) {
+								var date = new Date(value)
+								var texts = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-")
+								return texts
+							}
+						},
+						axisLine: { show: false },
+						splitLine: {
+							show: true,
+							lineStyle: { color: "rgba(233,233,233,0.1)" }
+						},
+						axisTick: {
+							lineStyle: {
+								color: "#fff"
+							},
+							length: 10,
+							alignWithLabel: true
+						}
+					},
+					yAxis: {
+						axisLine: {
+							onZero: false,
+							show: false
+						},
+						axisLabel: {
+							show: true,
+							textStyle: { color: "#ffffff" },
+							fontSize: 14
+						},
+						splitLine: {
+							show: true,
+							lineStyle: { color: "rgba(233,233,233,0.1)" }
+						},
+						inverse: true,
+						data: yAxisData_plant
+					},
+					series: [
+						{
+							type: "custom",
+							renderItem: function(params, api) {
+								var categoryIndex = api.value(0)
+								var start = api.coord([api.value(1), categoryIndex])
+								var end = api.coord([api.value(2), categoryIndex])
+								var height = api.size([0, 1])[1] * 0.6
+								var rectShape = echarts.graphic.clipRectByRect(
+									{
+										x: start[0],
+										y: start[1] - 5,
+										width: end[0] - start[0],
+										height: 10
+									},
+									{
+										x: params.coordSys.x,
+										y: params.coordSys.y,
+										width: params.coordSys.width,
+										height: params.coordSys.height
+									}
+								)
+								return (
+									rectShape && {
+										type: "rect",
+										shape: rectShape,
+										style: api.style()
+									}
+								)
+							},
+							encode: {
+								x: [1, 2],
+								y: 0
+							},
+							data: seriesData
+						}
+					]
+				}
+				var chats = document.getElementById(id)
+				myChart = echarts.init(chats)
+				myChart.setOption(option)
+			}),
+				drawcharts("main")
+		</script>
+	</body>
+</html>
