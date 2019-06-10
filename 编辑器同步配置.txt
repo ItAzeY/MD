@@ -1,3 +1,132 @@
-6f910e5117f31687af8e2ac912eaa36e9ab6fbf2 vscode ͬ������
-5b60f33f739f335c6c8a5bca4f7ae67f  atom��
-5b77bd6d522ffa3422f89d58b7936d508737f908 atom��(��֪������һ��)
+6f910e5117f31687af8e2ac912eaa36e9ab6fbf2 vscode ͬ������
+5b60f33f739f335c6c8a5bca4f7ae67f  atom��
+5b77bd6d522ffa3422f89d58b7936d508737f908 atom��(��֪������һ��)
+
+{
+	"workbench.statusBar.feedback.visible": false, // 控制显示Twitter笑脸
+	"workbench.startupEditor": "newUntitledFile", // 没文件时默认打开的文件夹名称
+	"workbench.sideBar.location": "left", // 操作栏的位置
+	"workbench.iconTheme": "ayu", // icon 主题
+	"workbench.colorTheme": "Quiet Light", // 颜色主题
+	"workbench.editor.showTabs": true, // 控制编辑器tabs
+	"workbench.editor.openPositioning": "left", // 新打开的文件再最左边
+	"window.zoomLevel": -1,
+	"terminal.integrated.shell.windows": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", // 指定终端
+	"vetur.format.defaultFormatter.js": "prettier-eslint", // prettier 的方式
+	"editor.tabSize": 2, //设置Tab键两空格
+	"emmet.includeLanguages": {
+		//为HTML和JavaScript启用了emmet
+		"html": "html",
+		"javascript": "javascriptreact"
+	},
+	"files.autoSave": "off", //设置延时保存，防止意外丢失
+	// "files.autoSaveDelay": 5000, //自动保存的延时时间
+	"editor.fontFamily": "'Fira Code Retina', 'Microsoft Yahei UI'", // 设置字体
+	"explorer.confirmDragAndDrop": false, // 拖动文件到编辑器是否确认
+	"explorer.openEditors.visible": 0,
+	"editor.minimap.enabled": false, // 缩略图
+	"editor.fontLigatures": true, // 启用连体字
+	"editor.wordWrap": "on", //换行
+	"editor.minimap.showSlider": "always",
+	"telemetry.enableTelemetry": false, // 联网发送错误消息
+	"files.trimTrailingWhitespace": true,
+	// 再任何地方都进行智能提示
+	"editor.quickSuggestions": {
+		"other": true,
+		"comments": true,
+		"strings": true
+	},
+	"editor.renderIndentGuides": true, // 显示缩进参考线
+	"editor.mouseWheelZoom": true, // ctrl + 滚轮调整字体
+	"editor.renderLineHighlight": "all", // 当前行高亮
+	"editor.formatOnSave": true, //保存自动格式化
+	"editor.formatOnPaste": true, //粘贴自动格式化
+	// 显示空白字符
+	"editor.renderWhitespace": "boundary",
+	// 有道翻译appKey
+	"translate.youdao.appKey": "7ba407a88549e2fd",
+	// 有道翻译appSecret
+	"translate.youdao.appSecret": "crzgvIWrxKLqHKmb3wKkJzC529aOYrhq",
+	"editor.fontSize": 20, // 文字大小
+	"vetur.format.defaultFormatterOptions": {
+		"prettier": {
+			"semi": false, // 格式化不加分号
+			"singleQuote": true // 格式化以单引号为主
+		}
+	},
+	"javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+	"prettier.printWidth": 100,
+	"prettier.useTabs": true,
+	"prettier.tabWidth": 2,
+	"prettier.semi": false,
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		"vue-html",
+		"html",
+		{
+			"language": "vue",
+			"autoFix": true
+		}
+	],
+	"eslint.run": "onSave",
+	"eslint.autoFixOnSave": true,
+	"terminal.integrated.fontSize": 18,
+	"markdown.preview.fontFamily": "'Fira Code Retina', 'Microsoft Yahei UI'",
+	"files.exclude": {
+		// 全局搜索配置
+		"**/.git": true,
+		"**/.DS_Store": true,
+		"**/*.meta": true,
+		"**/*.*.meta": true,
+		"**/*.unity": true,
+		"**/*.unityproj": true,
+		"**/*.mat": true,
+		"**/*.fbx": true,
+		"**/*.FBX": true,
+		"**/*.tga": true,
+		"**/*.cubemap": true,
+		// "**/**.prefab": true,
+		"**/Library": true,
+		"**/ProjectSettings": true,
+		"**/Temp": true,
+		"**/*.exe": true
+	},
+	"search.exclude": {
+		// 单独搜索配置
+		"**/node_modules": true,
+		"**/bower_components": true,
+		"**/.git": true,
+		"**/.DS_Store": true,
+		"**/*.meta": true,
+		"**/*.*.meta": true,
+		"**/*.unity": true,
+		"**/*.unityproj": true,
+		"**/*.mat": true,
+		"**/*.fbx": true,
+		"**/*.FBX": true,
+		"**/*.tga": true,
+		"**/*.cubemap": true,
+		// "**/**.prefab": true,
+		"**/Library": true,
+		"**/ProjectSettings": true,
+		"**/Temp": true,
+		"**/*.exe": true
+	},
+	"sync.gist": "6f910e5117f31687af8e2ac912eaa36e9ab6fbf2", // 同步的sync
+	"git.enabled": false, // 不启用git
+	"vetur.validation.template": false,
+	"[jsonc]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"vetur.format.defaultFormatter.html": "prettier",
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
+}
