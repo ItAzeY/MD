@@ -1,7 +1,7 @@
 6f910e5117f31687af8e2ac912eaa36e9ab6fbf2 vscode ͬ������
 5b60f33f739f335c6c8a5bca4f7ae67f  atom��
 5b77bd6d522ffa3422f89d58b7936d508737f908 atom��(��֪������һ��)
-
+   
 {
 	"workbench.statusBar.feedback.visible": false, // 控制显示Twitter笑脸
 	"workbench.startupEditor": "newUntitledFile", // 没文件时默认打开的文件夹名称
