@@ -4,7 +4,7 @@
 
 ### 容器和项目
 
-> 其中`container`就是容器.`item`就是项目.`grid`布局只对项目生效,`p`标签是会生效的,我理解的就是容器的直接子集才可以
+> 其中`container`就是容器.`item`就是项目.`grid`布局只对项目生效,对`p`标签是不会生效的,我理解的就是容器的直接子集才可以
 
 ```html
 <div class="container">
@@ -130,6 +130,11 @@ grid-template-columns: repeat(2, 100px 50px);
 ![index7-2](./img/index7-2.png)
 上面的图片是容器的宽度不够大的时候,`项目`会换行展示
 
+```css
+/* 这样的写法是错误的. */
+grid-template-columns: repeat(auto-fill, 1fr);
+```
+
 #### fr 关键字
 
 > 为了更方便的表示比例关系,网格布局提供了`fr`关键字,如果两列的宽度分别为 1fr 和 2fr，就表示后者是前者的两倍。
@@ -157,3 +162,97 @@ grid-template-columns: repeat(2, 100px 50px);
 ![index9](./img/index9.png)
 
 #### minmax()
+
+> `minmax()`函数产生一个长度范围，表示长度就在这个范围之中。它接受两个参数，分别为最小值和最大值。
+
+```css
+.container {
+	display: grid;
+	grid-template-columns: 1fr 1fr minmax(100px, 1fr);
+}
+```
+
+上面代码中，minmax(100px, 1fr)表示列宽不小于 100px，不大于 1fr。
+[上面代码](./html/grid10.html)表示第一个元素为`100px`的宽度,第二个元素为`1fr`,第三个为`最小单位是100 px,最大单位是1 fr,相当于最大宽最小宽`
+![index10](./img/index10.png)
+
+#### auto 关键字
+
+> auto 关键字表示由浏览器自己决定长度。
+
+```css
+.container {
+	display: grid;
+	grid-template-columns: 100px auto 100px;
+}
+```
+
+[上面代码](./html/grid11.html)第二列的宽度，基本上等于该列单元格的最大宽度，除非单元格内容设置了 min-width，且这个值大于最大宽度.(我理解的就是自适应)
+
+**请注意**会被`min-width 和 max-width`影响.
+![index11](./img/index11.png)
+
+#### 网格线的名称
+
+> `grid-template-columns`属性和`grid-template-rows`属性里面，还可以使用方括号，指定每一根网格线的名字，方便以后的引用。
+
+```css
+.container {
+	display: grid;
+	grid-template-columns: [c1] 100px [c2] 100px [c3] auto [c4];
+	grid-template-rows: [r1] 100px [r2] 100px [r3] auto [r4];
+}
+```
+
+上面的代码,有四个网格线,因为我们是`3 * 3`的网格布局,是需要有四个网格线的.
+
+网格布局允许同一根线有多个名字，比如`[fifth-line row-5]`。
+
+#### 12 网格布局
+
+```css
+.container {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+}
+```
+
+### grid-row-gap 属性， grid-column-gap 属性，grid-gap 属性
+
+> `grid-row-gap`属性设置行与行的间隔（行间距），`grid-column-gap`属性设置列与列的间隔（列间距）。
+
+```css
+.container {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-row-gap: 20px;
+	grid-column-gap: 20px;
+}
+```
+
+[上面代码](./html/grid12.html)`grid-row-gap`用于设置行间距，`grid-column-gap`用于设置列间距。
+
+**注意**只有网格中间是有间距,是没有`padding-top`和`padding-bottom`的
+![index12](./img/index12.png)
+
+> `grid-gap`属性是`grid-column-gap`和`grid-row-gap`的合并简写形式，语法如下。
+
+```css
+grid-gap: <grid-row-gap> <grid-column-gap>;
+```
+
+因此，上面一段 CSS 代码等同于下面的代码。
+
+```css
+.container {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-gap: 20px 20px;
+}
+```
+
+> 如果`grid-gap`省略了第二个值，浏览器认为第二个值等于第一个值。
+
+```md
+根据最新标准，上面三个属性名的`grid-`前缀已经删除，`grid-column-gap`和`grid-row-gap`写成`column-gap`和`row-gap`，`grid-gap`写成`gap`。
+```
