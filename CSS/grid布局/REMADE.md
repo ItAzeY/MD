@@ -256,3 +256,385 @@ grid-gap: <grid-row-gap> <grid-column-gap>;
 ```md
 根据最新标准，上面三个属性名的`grid-`前缀已经删除，`grid-column-gap`和`grid-row-gap`写成`column-gap`和`row-gap`，`grid-gap`写成`gap`。
 ```
+
+### grid-template-areas 属性
+
+> 网格布局允许指定"区域"（area），一个区域由单个或多个单元格组成。`grid-template-areas` 属性用于定义区域。
+
+```css
+.container {
+	display: grid;
+	grid-template-columns: 100px 100px 100px;
+	grid-template-rows: 100px 100px 100px;
+	grid-template-areas:
+		"a b c"
+		"d e f"
+		"g h i";
+}
+```
+
+> 上面代码先划分出 9 个单元格，然后将其定名为`a`到`i`的九个区域，分别对应这九个单元格。
+
+> 多个单元格合并成一个区域的写法如下。
+
+```css
+.container {
+	display: grid;
+	grid-template-columns: 100px 100px 100px;
+	grid-template-rows: 100px 100px 100px 100px;
+	grid-template-areas:
+		"葡萄 葡萄 葡萄"
+		"龙虾 养鱼 养鱼"
+		"龙虾 养鱼 养鱼"
+		"西瓜 西瓜 西瓜";
+}
+.putao {
+	grid-area: 葡萄;
+	background: yellow;
+}
+.longxia {
+	grid-area: 龙虾;
+	background: red;
+}
+.yangyu {
+	grid-area: 养鱼;
+	background: blue;
+}
+.xigua {
+	grid-area: 西瓜;
+	background: yellow;
+}
+```
+
+```html
+<div class="container">
+	<div class="putao">葡萄</div>
+	<div class="longxia">龙虾</div>
+	<div class="yangyu">养鱼</div>
+	<div class="xigua">西瓜</div>
+</div>
+```
+
+> 上面代码将 9 个单元格分成 a、b、c、d 四个区域。
+> a 是头部, b 和 c 是中间内容, d 是底部
+> 虽说我们分成了 9 个单元格,但是我们只用了 4 个盒子(区域)
+
+[上面代码](./html/grid13.html)
+![index13](./img/index13.png)
+
+**注意:**如果我们给网格区域命了名，但是没有给网格线命名，则会自动根据网格区域名称生成网格线名称，规则是区域名称后面加-start 和-end。例如，某网格区域名称是“葡萄”，则左侧 column 线名称就是“葡萄-start”，左侧 column 线名称就是“葡萄-end”。
+
+以及，我们的网格区域一定要形成规整的矩形区域，什么 L 形，凹的或凸的形状都是不支持的，会认为是无效的属性值。
+
+### grid-template 属性
+
+> `grid-template` 是 `grid-template-rows` 和 `grid-template-columns` 和 `grid-template-areas`属性的缩写。
+
+语法如下
+
+```css
+.container {
+	grid-template: <grid-template-rows> / <grid-template-columns>;
+}
+```
+
+举个例子,上图的区域划分.用`grid-template`缩写表示就是:
+
+```css
+.container {
+	display: grid;
+	grid-template:
+		"葡萄 葡萄 葡萄" 100px
+		"龙虾 养鱼 养鱼" 100px
+		"龙虾 养鱼 养鱼" 100px
+		"西瓜 西瓜 西瓜" 100px
+		/100px 100px 100px;
+}
+```
+
+[上面代码](./html/grid14.html)
+![index13](./img/index13.png)
+
+由于 `grid-template` 不会重置一些隐式的 `grid` 属性（如 `grid-auto-columns`，`grid-auto-rows` 和 `grid-auto-flow`），因此，大多数时候，还是推荐使用 `grid` 代替 `grid-template`。
+
+> 理解的就是说 不要用这种东西,还是老老实实用`grid`,现在还没介绍到,后面介绍 TODO
+
+### grid-auto-flow 属性
+
+> 划分网格以后，容器的子元素会按照顺序，自动放置在每一个网格。默认的放置顺序是"先行后列"，即先填满第一行，再开始放入第二行，即下图数字的顺序。
+
+![index14](./img/index14.png)
+
+这个顺序由`grid-auto-flow`属性决定，默认值是`row`，即"先行后列"。也可以将它设成`column`，变成"先列后行"。
+
+```css
+grid-auto-flow: column;
+```
+
+[上面代码](./html/grid15.html)设置了 column 以后，放置顺序就变成了下图
+![index15](./img/index15.png)
+
+> `grid-auto-flow`属性除了设置成`row`和`column`，还可以设成`row dense`和`column dense`。这两个值主要用于，某些项目指定位置以后，剩下的项目怎么自动放置。
+
+[下面代码](./html/grid16.html)让 1 号项目和 2 号项目各占据两个单元格.然后在默认的 `grid-auto-flow: row` 情况下，会产生下面这样的布局。
+![index16](./img/index16.png)
+
+上图中，1 号项目后面的位置是空的，这是因为 3 号项目默认跟着 2 号项目，所以会排在 2 号项目后面。
+
+现在修改设置，设为 `row dense`，表示"先行后列"，并且尽可能紧密填满，尽量不出现空格。
+
+```css
+grid-auto-flow: row dense;
+```
+
+[上面代码](./html/grid17.html)的效果如下:
+![index17](./img/index17.png)
+
+上图会先填满第一行，再填满第二行，所以 3 号项目就会紧跟在 1 号项目的后面。8 号项目和 9 号项目就会排到第四行.
+
+如果将设置改为`column dense`，表示"先列后行"，并且尽量填满空格。
+
+```css
+grid-auto-flow: column dense;
+```
+
+[上面代码](./html/grid18.html)的效果如下:
+![index18](./img/index18.png)
+
+上图会先填满第一列，再填满第 2 列，所以 3 号项目在第一列，4 号项目在第二列。8 号项目和 9 号项目被挤到了第四列。
+
+### justify-items 属性
+
+> `justify-items`属性设置单元格内容的水平开始位置（左中右），`align-items`属性设置单元格内容的垂直开始位置（上中下）。
+
+**注意:** 设置的是单元格内容的`开始`位置`开始`位置`开始`位置
+
+语法如下:
+
+```css
+.container {
+	justify-items: start | end | center | stretch;
+}
+```
+
+这两个属性的写法完全相同，都可以取下面这些值。
+
+```md
+stretch:默认值，拉伸。表现为水平填充
+
+start:表现为网格水平尺寸收缩为内容大小，同时沿着网格线左侧对齐显示（假设文档流方向没有变）。
+
+end:表现为网格水平尺寸收缩为内容大小，同时沿着网格线右侧对齐显示（假设文档流方向没有变）。
+
+center:表现为网格水平尺寸收缩为内容大小，同时在当前网格区域内部水平居中对齐显示（假设文档流方向没有变）。
+。
+```
+
+```css
+.container {
+	display: grid;
+	grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+	justify-items: start;
+}
+.item {
+	font-size: 4em;
+	text-align: center;
+}
+```
+
+[上面代码](./html/grid19.html)的效果如下:
+![index19](./img/index19.png)
+
+**注意:**如果设置`justify-items`不为默认值的情况下,`item`项目的宽度就会收缩成盒子本身的宽度`4em`.其实项目的宽度是正常的`1fr`.
+
+[下面代码](./html/grid20.html)是设置了盒子的宽度,就会撑满了
+
+```css
+.container {
+	display: grid;
+	grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+	justify-items: start;
+}
+.item {
+	font-size: 4em;
+	text-align: center;
+	width: 100%;
+}
+```
+
+![index20](./img/index20.png)
+
+上面的例子都是设置水平方向的对齐
+
+### align-items 属性
+
+语法如下:
+
+```css
+.container {
+	align-items: start | end | center | stretch;
+}
+```
+
+下面的例子就看看垂直方向的对齐
+
+```css
+.container {
+	display: grid;
+	grid-template: 100px 100px 100px / 100px 100px 100px;
+	align-items: start;
+}
+.item {
+	font-size: 2em;
+	text-align: center;
+}
+```
+
+[上面代码](./html/grid21.html)是把垂直方向设置为顶部对齐.
+
+![index21](./img/index21.png)
+
+**注意:**如果设置`align-items`不为默认值的情况下,`item`项目的高度就会收缩成盒子本身的宽度`2em`.其实项目的宽度是正常的`100px`.
+
+### place-items 属性
+
+> 上面讲解了`justify-items` 和 `align-items`,还剩下 `place-items`
+
+我们现在来讲下`place-items`属性
+
+> `place-items`属性是`align-items`属性和`justify-items`属性的合并简写形式。
+
+语法如下:
+
+```css
+place-items: <align-items> <justify-items>;
+place-items: end start;
+```
+
+**注意**:如果省略第二个值，则浏览器认为与第一个值相等。
+
+```css
+.container {
+	display: grid;
+	grid-template: 100px 100px 100px / 100px 100px 100px;
+	place-items: end start;
+}
+.item {
+	font-size: 2em;
+	text-align: center;
+}
+```
+
+[上面代码](./html/grid22.html)是把水平方向设置为左边对齐,垂直方向设置为底部对齐.
+![index22](./img/index22.png)
+**注意:**如果设置`place-items`不为默认值的情况下,同样会收缩`item`为内容的大小
+
+**注意**`place-items`先设置的是`垂直`方向,其次设置的才是`水平`方向
+
+### justify-content 属性 和 align-content 属性 还有 place-content 属性
+
+> justify-content 属性是整个内容区域在容器里面的水平位置（左中右）,align-content 属性是整个内容区域的垂直位置（上中下）。
+
+**注意:** 设置的是`内容区域` 在 `容器区域` 的位置
+
+```css
+.container {
+	justify-content: start | end | center | stretch | space-around | space-between | space-evenly;
+	align-content: start | end | center | stretch | space-around | space-between | space-evenly;
+}
+```
+
+这两个属性的写法完全相同，都可以取上面这些值。（下面的图都以 justify-content 属性为例，align-content 属性的图完全一样，只是将水平方向改成垂直方向。）
+
+#### justify-conten 属性
+
+- start - 对齐容器的起始边框。
+  ![index23](./img/index23.png)
+
+- end - 对齐容器的结束边框
+  ![index24](./img/index24.png)
+
+- center - 容器内部居中
+  ![index25](./img/index25.png)
+
+- stretch - 项目大小没有指定时，拉伸占据整个网格容器。
+
+- space-around - 每个项目两侧的间隔相等。所以，项目之间的间隔比项目与容器边框的间隔大一倍。
+  ![index26](./img/index26.png)
+
+- space-between - 项目与项目的间隔相等，项目与容器边框之间没有间隔。
+  ![index27](./img/index27.png)
+
+- space-evenly - 项目与项目的间隔相等，项目与容器边框之间也是同样长度的间隔。
+  ![index28](./img/index28.png)
+
+#### align-content 属性
+
+垂直方向的对齐方式
+
+> 需要设置`容器`的高度.例子的容器都是 `500px`
+
+- start - 对齐容器的顶部边框。
+  ![index29](./img/index29.png)
+
+- end - 对齐容器的底部边框。
+  ![index30](./img/index30.png)
+
+- center - 容器内部居中
+  ![index31](./img/index31.png)
+
+- stretch - 默认值。
+
+- space-around - 每个项目垂直的间隔相等。所以，项目之间的间隔比项目与容器边框的间隔大一倍。
+  ![index32](./img/index32.png)
+
+- space-between - 项目与项目的间隔相等，项目与容器边框之间没有间隔。
+  ![index33](./img/index33.png)
+
+- space-evenly - 项目与项目的间隔相等，项目与容器边框之间也是同样长度的间隔。
+  ![index34](./img/index34.png)
+
+#### place-content 属性
+
+> `place-content`属性是`align-content`属性和`justify-content`属性的合并简写形式。
+
+语法如下:
+
+```css
+place-content: <align-content> <justify-content>;
+```
+
+**注意:** 第一个属性是先设置`垂直`方向对齐方式,第二个属性设置`水平`方向对齐方式
+
+```css
+.container {
+	display: grid;
+	grid-template: 100px 100px 100px / 100px 100px 100px;
+	place-content: space-evenly space-between;
+	height: 500px;
+}
+```
+
+[上面代码](./html/grid35.html)垂直方向设置的是`space-evenly`(项目与项目的间隔相等，项目与容器边框之间也是同样长度的间隔。), 水平方向设置的是`space-between`(项目与项目的间隔相等，项目与容器边框之间没有间隔)
+![index35](./img/index35.png)
+
+### grid-auto-columns 属性 grid-auto-rows 属性
+
+> 有时候，一些项目的指定位置，在现有网格的外部。比如网格只有 3 列，但是某一个项目指定在第 5 行。这时，浏览器会自动生成多余的网格，以便放置项目。
+
+`grid-auto-columns` 属性和 `grid-auto-rows` 属性用来设置，浏览器自动创建的多余网格的列宽和行高。它们的写法与 `grid-template-columns` 和 `grid-template-rows` 完全相同。如果不指定这两个属性，浏览器完全根据单元格内容的大小，决定新增网格的列宽和行高。
+
+#### grid-auto-columns 属性
+
+[下面例子](./html/grid36.html)里面，划分好的网格是 3 行 x 3 列，但是，8 号项目指定在第 4 行，9 号项目指定在第 5 行。
+
+```css
+.container {
+	display: grid;
+	grid-template: 100px 100px 100px / 100px 100px 100px;
+	grid-auto-rows: 100px;
+}
+```
+
+上面代码指定新增的行高统一为 50px（原始的行高为 100px）。
+![index36](./img/index36.png)

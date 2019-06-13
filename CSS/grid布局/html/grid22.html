@@ -6,12 +6,17 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<title>Document</title>
 		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
 			.container {
 				display: grid;
-				grid-template-columns: 100px 1fr minmax(100px, 1fr);
+				grid-template: 100px 100px 100px / 100px 100px 100px;
+				place-items: end start;
 			}
 			.item {
-				font-size: 4em;
+				font-size: 2em;
 				text-align: center;
 			}
 			.item-1 {
@@ -39,6 +44,9 @@
 			.item-8 {
 				background-color: blanchedalmond;
 			}
+			.item-9 {
+				background: chartreuse;
+			}
 		</style>
 	</head>
 	<body>
@@ -51,6 +59,7 @@
 			<div class="item item-6">6</div>
 			<div class="item item-7">7</div>
 			<div class="item item-8">8</div>
+			<div class="item item-9">9</div>
 		</div>
 	</body>
 </html>

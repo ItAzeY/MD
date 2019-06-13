@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			.container {
+				display: grid;
+				grid-template:
+					"葡萄 葡萄 葡萄" 100px
+					"龙虾 养鱼 养鱼" 100px
+					"龙虾 养鱼 养鱼" 100px
+					"西瓜 西瓜 西瓜" 100px
+					/ 100px 100px 100px;
+			}
+			.putao {
+				grid-area: 葡萄;
+				background: yellow;
+			}
+			.longxia {
+				grid-area: 龙虾;
+				background: red;
+			}
+			.yangyu {
+				grid-area: 养鱼;
+				background: blue;
+			}
+			.xigua {
+				grid-area: 西瓜;
+				background: yellow;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="putao">葡萄</div>
+			<div class="longxia">龙虾</div>
+			<div class="yangyu">养鱼</div>
+			<div class="xigua">西瓜</div>
+		</div>
+	</body>
+</html>
