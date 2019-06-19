@@ -638,3 +638,173 @@ place-content: <align-content> <justify-content>;
 
 上面代码指定新增的行高统一为 50px（原始的行高为 100px）。
 ![index36](./img/index36.png)
+
+### grid-template 属性 grid 属性
+
+> `grid-template`属性是`grid-template-columns`、`grid-template-rows`和`grid-template-areas`这三个属性的合并简写形式。
+
+> `grid`属性是`grid-template-rows`、`grid-template-columns`、`grid-template-areas`、 `grid-auto-rows`、`grid-auto-columns`、`grid-auto-flow`这六个属性的合并简写形式。
+
+> 从易读易写的角度考虑，还是建议不要合并属性，所以这里就不详细介绍这两个属性了。
+
+### grid-column-start 属性 grid-column-end 属性 grid-row-start 属性 grid-row-end 属性
+
+项目的位置是可以指定的，具体方法就是指定项目的四个边框，分别定位在哪根网格线。
+
+- grid-column-start 属性：左边框所在的垂直网格线
+- grid-column-end 属性：右边框所在的垂直网格线
+- grid-row-start 属性：上边框所在的水平网格线
+- grid-row-end 属性：下边框所在的水平网格线
+
+```css
+.item-1 {
+	grid-column-start: 2;
+	grid-column-end: 4;
+}
+```
+
+[上面例子](./thml/index37.html)的例子是: 1 号项目的左边框是第二根垂直网格线，右边框是第四根垂直网格线。至于多出来的两项我用了上一节刚刚讲过的属性
+![index37](./img/index37.png)
+
+> 上面我们只是设置了`grid-column-start` 和 `grid-cloumn-end`,下面我们来介绍一下另外两个属性,分别是`grid-row-start` 和 `grid-row-end`
+
+```css
+.item-1 {
+	grid-column-start: 1;
+	grid-column-end: 3;
+	grid-row-start: 2;
+	grid-row-end: 4;
+}
+```
+
+[上面例子](./thml/index38.html)是四个属性都有的情况,是不是很好,可以任意指定项目的位置
+![index38](./img/index38.png)
+
+**注意:** 除了可以指定网格线的位置,还可以指定为网格线的名字.
+
+```css
+.item-1 {
+	grid-column-start: header-start;
+	grid-column-end: header-end;
+}
+```
+
+上面代码中，左边框和右边框的位置，都指定为网格线的名字
+
+这四个属性的值还可以使用 span 关键字，表示"跨越"，即左右边框（上下边框）之间跨越多少个网格。
+
+```css
+.item-1 {
+	background-color: aliceblue;
+	grid-column-start: span 2;
+	grid-row-start: 2;
+	grid-row-end: 4;
+}
+```
+
+[上面例子](./thml/index39.html)是 1 号项目的左边框距离右边框跨越 2 个网格。
+![index39](./img/index39.png)
+
+> 使用`span`关键字,就不要再指定`grid-column-end`来标记结束了
+
+### grid-column 属性 grid-row 属性
+
+> `grid-column`属性是`grid-column-start`和`grid-column-end`的合并简写形式，`grid-row`属性是`grid-row-start`属性和`grid-row-end`的合并简写形式
+
+```css
+.item {
+	grid-column: <start>/<end>;
+	grid-row: <start>/<end>;
+}
+```
+
+举个梨子:
+
+```css
+.item-1 {
+	grid-column: 1/3;
+	grid-row: 1/2;
+}
+/* 等同于 */
+.item-1 {
+	grid-column-start: 1;
+	grid-column-end: 3;
+	grid-row-start: 1;
+	grid-row-end: 2;
+}
+```
+
+[上面代码](./thml/index40.html)项目`item-1`占据第一行到第二行，从第一根列线到第三根列线。
+![index40](./img/index40.png)
+
+> 这两个属性之中，也可以使用`span`关键字，表示跨越多少个网格。
+
+下面的代码和上面的代码展示的都是一样的,只不过换了一种表达形式而已
+
+```css
+.item-1 {
+	background: #b03532;
+	grid-column: 1 / 3;
+	grid-row: 1 / 3;
+}
+/* 等同于 */
+.item-1 {
+	background: #b03532;
+	grid-column: 1 / span 2;
+	grid-row: 1 / span 2;
+}
+```
+
+![index41](./img/index41.png)
+
+> 斜杠以及后面的部分可以省略，默认跨越一个网格。
+
+```css
+.item-1 {
+	grid-column: 1;
+	grid-row: 1;
+}
+```
+
+上面代码中，项目 item-1 占据左上角第一个网格。
+
+### grid-area 属性
+
+> `grid-area`属性指定项目放在哪一个区域
+
+```css
+.container {
+	display: grid;
+	grid-template: 100px 100px 100px / 100px 100px 100px;
+	grid-template-areas:
+		"a b c"
+		"d e f"
+		"g h i";
+}
+.item-1 {
+	grid-area: e;
+}
+```
+
+[上面代码](./thml/index42.html)中，1 号项目位于 `e` 区域，效果如下图。
+![index42](./img/index42.png)
+
+> `grid-area`属性还可用作`grid-row-start`、`grid-column-start`、`grid-row-end`、`grid-column-end`的合并简写形式，直接指定项目的位置。
+
+语法如下:
+
+```css
+.item {
+	grid-area: <row-start> / <column-start> / <row-end> / <column-end>;
+}
+```
+
+举个[例子](./thml/index43.html):
+
+```css
+.item-1 {
+	grid-area: 1 / 1 / 4 / 4;
+}
+```
+
+![index43](./img/index43.png)

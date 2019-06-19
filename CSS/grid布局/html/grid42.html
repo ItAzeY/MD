@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			.container {
+				display: grid;
+				grid-template: 100px 100px 100px / 100px 100px 100px;
+				grid-template-areas:
+					"a b c"
+					"d e f"
+					"g h i";
+			}
+			.item {
+				font-size: 2em;
+				text-align: center;
+			}
+			.item-1 {
+				background-color: aliceblue;
+				grid-area: e;
+			}
+			.item-2 {
+				background-color: antiquewhite;
+			}
+			.item-3 {
+				background-color: aqua;
+			}
+			.item-4 {
+				background-color: aquamarine;
+			}
+			.item-5 {
+				background-color: azure;
+			}
+			.item-6 {
+				background-color: beige;
+			}
+			.item-7 {
+				background-color: black;
+				color: #fff;
+			}
+			.item-8 {
+				background-color: blanchedalmond;
+			}
+			.item-9 {
+				background: chartreuse;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="item item-1">1</div>
+			<div class="item item-2">2</div>
+			<div class="item item-3">3</div>
+			<div class="item item-4">4</div>
+			<div class="item item-5">5</div>
+			<div class="item item-6">6</div>
+			<div class="item item-7">7</div>
+			<div class="item item-8">8</div>
+			<div class="item item-9">9</div>
+		</div>
+	</body>
+</html>
