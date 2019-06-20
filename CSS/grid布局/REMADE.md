@@ -809,4 +809,68 @@ place-content: <align-content> <justify-content>;
 
 ![index43](./img/index43.png)
 
-test
+### justify-self 属性 align-self 属性 place-self 属性
+
+> `justify-self`属性设置单元格内容的水平位置（左中右），跟`justify-items`属性的用法完全一致，但只作用于单个项目。
+
+> `align-self`属性设置单元格内容的垂直位置（上中下），跟`align-items`属性的用法完全一致，也是只作用于单个项目。
+
+```css
+.item {
+	justify-self: start | end | center | stretch;
+	align-self: start | end | center | stretch;
+}
+```
+
+这两个属性都可以取下面四个值。
+
+- start：对齐单元格的起始边缘。
+- end：对齐单元格的结束边缘。
+- center：单元格内部居中。
+- stretch：拉伸，占满单元格的整个宽度（默认值）。
+
+[下面](./html/index44.html)是 `justify-self: start` 的例子。
+
+```css
+.item-1 {
+	justify-self: start;
+}
+```
+
+![index44](./img/index44.png)
+
+**注意:** 上面的除了默认值以外,都会是内容的大小决定盒子的大小.默认值是撑满盒子
+
+> `place-self`属性是`align-self`属性和`justify-self`属性的合并简写形式。
+
+如法如下:
+
+```css
+place-self: <align-self> <justify-self>;
+```
+
+[下面](./html/index45.html)是一个例子。
+
+```css
+.item-1 {
+	place-self: center center;
+}
+```
+
+![index45](./img/index45.png)
+
+**注意:** 如果省略第二个值，place-self 属性会认为这两个值相等
+
+到此为止 `容器`和`项目`中的属性已经介绍完毕
+
+## 其他知识点
+
+- 在`Grid`布局中，`float`，`display:inline-block`，`display:table-cell`，`vertical-align`以及`column-*`这些属性和声明对`grid子`项是没有任何作用的。这个可以说是 Grid 布局中的常识，面试经常会问的，一定要记得。
+- `Grid`布局则适用于更大规模的布局（二维布局），而`Flexbox`布局最适合应用程序的组件和小规模布局（一维布局）
+- 命名虽然支持中文，但由于 CSS 文件中文存在乱码的风险，所以……创新还是保守就看大家自己的抉择了。
+
+- `IE10-IE15`虽然名义上支持`Grid`布局，但支持的是老版本语法（本文是介绍的全是 2.0 全新语法），还需要加`-ms-`私有前缀，精力原因，IE 下的使用并未深究，以后有机会再补充。
+
+本文是参考`阮一峰`老师的[博客](http://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html)和`张鑫旭`大神的[博客](https://www.zhangxinxu.com/wordpress/2018/11/display-grid-css-css3/)下完成的.如果有些看的不清白,可以直接看两位老师的博客.
+
+写在最后,一共花了两周的业余时间.从端午节到今天.可能写的不好,完全参照两位大神写的,但是也没有错啊,他们已经总结的很好了,我也没有必要鸡蛋里面挑石头,模仿两位大神是因为项目中没有用到,只是写个 demo 加深记忆.ok,就酱~~~
