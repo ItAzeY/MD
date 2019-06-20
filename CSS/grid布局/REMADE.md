@@ -546,7 +546,7 @@ place-items: end start;
 
 这两个属性的写法完全相同，都可以取上面这些值。（下面的图都以 justify-content 属性为例，align-content 属性的图完全一样，只是将水平方向改成垂直方向。）
 
-#### justify-conten 属性
+#### justify-content 属性
 
 - start - 对齐容器的起始边框。
   ![index23](./img/index23.png)
@@ -808,8 +808,5 @@ place-content: <align-content> <justify-content>;
 ```
 
 ![index43](./img/index43.png)
-<<<<<<< HEAD
-目前在 master 分支
-=======
+
 test
->>>>>>> test
