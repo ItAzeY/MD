@@ -33,3 +33,51 @@ content: `<h1 style="text-align: center;">Welcome to the TinyMCE demo!</h1><p st
 ## Tinymce 组件
 
 > src/components/Tinymce
+
+```js
+// 引入 csn 加载
+const tinymceCDN = "https://cdn.jsdelivr.net/npm/tinymce-all-in-one@4.9.3/tinymce.min.js"
+```
+
+在`methods`中写了一个`init`方法,并在 `mounted` 钩子函数中触发它
+
+```js
+init() {
+  // dynamic load tinymce from cdn
+  load(tinymceCDN, (err) => {
+    if (err) {
+      this.$message.error(err.message)
+      return
+    }
+    this.initTinymce()
+  })
+}
+```
+
+```js
+// load 是引入的方法,
+import load from "./dynamicLoadScript"
+```
+
+子组件定义一个 `props` , `width` 的类型为`Number` And `String`类型,那么我们就要判断宽度的类型,然后设置给子组件中的元素(ele)
+
+```js
+// props
+width: {
+  type: [Number, String],
+  required: false,
+  default: 'auto'
+}
+// 计算属性
+computed: {
+  containerWidth() {
+    const width = this.width
+    if (/^[\d]+(\.[\d]+)?$/.test(width)) { // matches `100`, `'100'`
+      return `${width}px`
+    }
+    return width
+  }
+}
+```
+
+感觉别的都是再说这个 富文本插件 暂时不看插件,如果可以后面会单独讲
