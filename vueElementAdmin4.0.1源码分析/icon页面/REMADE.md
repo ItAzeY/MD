@@ -89,12 +89,11 @@ export default {
 
 ```js
 <template>
-// v-on="$listeners"触发这个组件上所有的监听器
   <svg :class="svgClass" aria-hidden="true" v-on="$listeners">
     <use :xlink:href="iconName" />
   </svg>
 </template>
-
+//v-on="$listeners"触发这个组件上所有的监听器
 <script>
 export default {
   name: 'SvgIcon',
