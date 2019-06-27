@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<body>
+		<form id="form">
+			<input type="button" id="button" />
+		</form>
+		<input type="text" form="form" id="input" />
+		<script>
+			var button = document.querySelector("#button")
+			var input = document.querySelector("#input")
+			console.log(button.form)
+			console.log(input.form)
+		</script>
+	</body>
+</html>
