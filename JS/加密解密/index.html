@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<body>
+		<!-- <script src="https://cdn.bootcss.com/crypto-js/3.1.9-1/aes.js"></script> -->
+		<!-- <script type="text/javascript" src="path-to/bower_components/crypto-js/crypto-js.js"></script> -->
+		<script src="https://cdn.bootcss.com/crypto-js/3.1.9/crypto-js.js"></script>
+		<script>
+			var encrypted = CryptoJS.AES.encrypt("Message", "Secret Passphrase")
+
+			var decrypted = CryptoJS.AES.decrypt(encrypted, "Secret Passphrase")
+			console.log(JSON.stringify(decrypted))
+		</script>
+	</body>
+</html>

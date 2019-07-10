@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<body>
+		<input type="checkbox" name="test" value="1" />1<br />
+		<input type="checkbox" name="test" value="2" />2<br />
+		<input type="checkbox" name="test" value="3" />3<br />
+		<input type="checkbox" name="test" value="4" />4<br />
+		<input type="button" value="获取" id="button" onclick="showCheck()" />
+		<script>
+			var tests = document.getElementsByName("test")
+			function showCheck() {
+				var check_val = []
+				for (var i = 0; i < tests.length; i++) {
+					if (tests[i].checked) {
+						check_val.push(tests[i].value)
+					}
+				}
+				console.log(check_val)
+			}
+		</script>
+	</body>
+</html>
