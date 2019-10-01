@@ -125,6 +125,8 @@ git branch -d test
 ```Bash
 # 删除远程的 dev 分支
 git push origin :heads/dev
+# 这一种更好一些,上面的会 push 一次
+git push origin --delete <BranchName>
 ```
 
 ```Bash
@@ -335,6 +337,21 @@ git log --no-merges
 git log --after '01-10-2019'
 # 显示从 2019 年 10 月 10 号之前的内容(当前这条测试是 01-10-2019 做的,如果用 beofre,必须设置为 10号 以后才会有)
 git log --before '10-10-2019'
+```
+
+## rebase
+
+这个命令在于当前分支是根据`master`分支已经被别人向前移.
+
+```bash
+# 在分支的位置进行 rebase
+git rebase master
+# 然后在回到 master 分支,进行 merge
+git checkout master
+git merge <当前分支>
+git push
+# 回退 rebase 之前的版本
+git rebase —abort
 ```
 
 ## 分支冲突
