@@ -306,7 +306,7 @@ git checkout -b newbranch origin/master
 git log
 ```
 
-git log 还会有一些额外的参数
+`git log` 还会有一些额外的参数
 
 ```bash
 # 仅仅输出commit hash 前7个字符串和commit message.
@@ -317,8 +317,8 @@ git log --stat
 git log -2
 # 控制输出每个commit具体修改的内容，输出的形式以diff的形式给出。
 git log -p
-# 显示当前指定的版本信息
-git show
+# 显示当前指定的版本信息 还可以指定版本
+git show <版本>
 # 用来输出汇总信息，以作者进行分类。
 git shortlog
 # 可以用来统计每个作者的commit数量
