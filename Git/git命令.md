@@ -367,6 +367,87 @@ git commit --amend
 
 `commit --amend` 并不是直接修改原 `commit`，而是重新生成一个新的 `commit`，并替换掉旧的 `commit`(为什么是替换不是修改呢?是因为每次的版本号不一样了呢)
 
+## 删除这次 commit
+
+```bash
+#  这是把当前的版本回滚到上一个版本.如果当前的版本是a4,执行下面的语句会回到a3,但是你调用 git log 就不会看到 a4 的信息了.但是你如果把 a4 的hash 值记到了,还是可以回滚到 a4 的版本的
+#  请注意,调用 reset,你未保存的文件和 add 的文件就会被干掉
+#  HEAD^ 是当前指针,^是上一个版本
+git reset --hard HEAD^
+```
+
+## reset
+
+前面说的用`git reset --hard` 这行代码可以撤销掉当前 `commit`
+
+其实这不是 `reset` 的本质
+`reset` 的本质是什么呢? 是移动 `HEAD` 以及它所指向的 `branch`,它是用来重置 `HEAD` 以及它所指向的 `branch` 的位置的。 这也就是说为什么可以 a3 再次回到 a4 的版本原因,reset 只是移动并没有删除掉
+
+`reset` 还可以有切换分支的作用:
+![爱我的](./img/gitreset切换分支)
+
+```bash
+git reset --hard   # 重置位置的同时，清空工作目录的所有改动；
+git reset --soft # 重置位置的同时，保留工作目录和暂存区的内容，并把重置 HEAD 的位置所导致的新的文件差异放进暂存区
+git reset --mix  # 重置位置的同时，保留工作目录的内容，并清空暂存区。(默认值)
+```
+
+## ^
+
+`^` 的用法: 在 `commit` 的后面加一个或多个 ^ 号，可以把 commit 往回偏移，偏移的数量是 ^ 的数量。例如：master^ 表示 master 指向的 commit 之前的那个 commit； HEAD^^ 表示 HEAD 所指向的 commit 往前数两个 commit。
+
+## ~
+
+~ 的用法：在 commit 的后面加上 ~ 号和一个数，可以把 commit 往回偏移，偏移的数量是 ~ 号后面的数。例如：HEAD~5 表示 HEAD 指向的 commit往前数 5 个 commit。
+
+## checkout
+
+在前面的 branch 的部分，我说到 checkout 可以用来切换 branch：
+
+```bash
+git checkout branch2
+```
+![checkout本质](./img/checkout本质)
+
+不过实质上，`checkout` 并不止可以切换 `branch`。`checkout` 本质上的功能其实是：签出（ `checkout` ）指定的 `commit`。
+
+`git checkout branch`名 的本质，其实是把 `HEAD` 指向指定的 `branch`，然后签出这个 `branch` 所对应的 `commit` 的工作目录。所以同样的，`checkout` 的目标也可以不是 `branch`，而直接指定某个 `commit`：
+
+```shell
+git checkout HEAD^^
+git checkout master~5
+git checkout 78a4bc
+git checkout 78a4bc^
+```
+
+**checkout 和 reset 的不同**
+`checkout` 和 `reset` 都可以切换 `HEAD` 的位置，它们除了有许多细节的差异外，最大的区别在于：`reset` 在移动 `HEAD` 时会带着它所指向的 `branch` 一起移动，而 `checkout` 不会。当你用 `checkout` 指向其他地方的时候，`HEAD` 和 它所指向的 `branch` 就自动脱离了。
+
+## 代码已经 push 上去了才发现写错
+
+两种情况:
+
+**1.** 第一中都是自己的分支(没有别人进行操作,不然强行 push 的时候会把别人的代码干掉)
+
+如果是自己一个人的分支,可以通过 `git commit --amend` 来修改上次 `commit`,但是这是我们 push 的时候会出现 push 失败,说远程仓库的版本比当前版本要高,这是我们可以强行 push 
+
+```bash
+# -f ==== --force
+git push orgin master -f
+```
+
+**2.** 出错的内容已经合并到master(或者说已经合并到共同开发的分支时)
+
+不知道怎么弄...
+
+## stash
+
+我理解的就是把你所有的改动的文件暂时藏在一个秘密的地方,回滚到刚刚 `commit` 完干干净净的状态.
+
+例子上面是: 你在修改的时候, 运维让你打个包,然后你执行 `git stash -u` 然后回滚到刚刚 commit 之后的状态,然后进行打包,打完包之后执行`git stash prop` 就可以回滚到你刚刚修改的东西.
+
+-u 是把没有 add 的文件也管理起来.
+
 ## 分支冲突
 
 远程代码:
